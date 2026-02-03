@@ -9,6 +9,15 @@ header { visibility: hidden; }
 </style>
 """, unsafe_allow_html=True)
 
+#remove header bar gap
+st.markdown("""
+<style>
+.block-container {
+    padding-top: 1rem;
+}
+</style>
+""", unsafe_allow_html=True)
+
 
 #choose theme
 THEME = "quirk"
