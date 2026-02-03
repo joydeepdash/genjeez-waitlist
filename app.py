@@ -1,5 +1,9 @@
 import streamlit as st
 import streamlit_shadcn_ui as ui
+import gspread
+from google.oauth2.service_account import Credentials
+from datetime import datetime
+import re
 
 
 #hide default Streamlit header bar
@@ -125,6 +129,44 @@ with st.form("waitlist"):
     st.markdown("**Queries (optional)**")
     queries = ui.input(default_value = "", type = "text", placeholder = "Any queries?", key = "input4")
         
-    st.form_submit_button("Submit")
+    submitted = st.form_submit_button("Submit")
+    
+
+#connecting to google sheet and caching the live handle
+@st.cache_resource
+def get_sheet():
+    scopes = [
+    "https://www.googleapis.com/auth/spreadsheets",
+    "https://www.googleapis.com/auth/drive"
+    ]
+    creds = Credentials.from_service_account_info(
+        st.secrets["gcp_service_account"], scopes=scopes
+    )
+    client = gspread.authorize(creds)
+    return client.open("Contact Information (Responses)").sheet1
+
+
+#open the cached handle and check if email already exists else append and output message
+sheet = get_sheet()
+EMAIL_REGEX = r"^[^@\s]+@[^@\s]+\.[^@\s]+$"
+
+if submitted:
+    if not name or not email or not insta:
+        st.error("Name, email address, and Instagram ID are required fields.")
+        st.stop()
+
+    if not re.match(EMAIL_REGEX, email):
+        st.error("Enter a valid email address.")
+        st.stop()
+    
+    emails_norm = [e.strip().lower() for e in sheet.col_values(3)]
+    email_norm = email.strip().lower()
+    if email_norm in emails_norm:
+        st.warning("Submission already exists for this email.")
+    else:
+        sheet.append_row([datetime.now().isoformat(), name, email_norm, insta, queries])
+        st.success("Thank you for your submission!")
+    st.stop()
+        
 
     
