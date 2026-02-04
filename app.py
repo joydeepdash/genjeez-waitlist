@@ -164,7 +164,7 @@ if submitted:
     if email_norm in emails_norm:
         st.warning("Submission already exists for this email.")
     else:
-        sheet.append_row([datetime.now().isoformat(), name, email_norm, insta, queries])
+        sheet.append_row([datetime.now().isoformat(), name, email_norm, insta, queries], insert_data_option = "INSERT_ROWS")
         st.success("Thank you for your submission!")
     st.stop()
         
