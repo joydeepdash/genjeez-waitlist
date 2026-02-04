@@ -58,35 +58,65 @@ elif THEME == "minimal":
 elif THEME == "quirk":
     st.markdown("""
     <style>
-    /* ===== Light mode (default) ===== */
+    /* ===== Light mode (original quirk look) ===== */
     .stApp {
         background-color: #ffffff;
-        color: #111111;
     }
 
+    /* Title */
+    h1 {
+        color: rgba(0, 0, 0, 0.85);
+    }
+
+    /* Value signal */
     .subtle {
         font-style: italic;
         opacity: 0.75;
+        color: rgba(0, 0, 0, 0.8);
     }
 
-    /* ===== Dark mode ===== */
+    /* Description text */
+    .stCaption {
+        color: rgba(0, 0, 0, 0.6);
+    }
+
+    /* Field labels (Name, Email, etc.) */
+    label,
+    strong {
+        color: rgba(0, 0, 0, 0.75);
+    }
+
+    /* Inputs (unchanged from original) */
+    input {
+        background-color: #fffdf8 !important;
+        border-radius: 14px !important;
+        border: 1px solid #f0e6d8 !important;
+    }
+
+    /* ===== Dark mode (aligned with shadcn) ===== */
     @media (prefers-color-scheme: dark) {
         .stApp {
             background-color: #0f1117;
+        }
+
+        h1 {
             color: #e6e6e6;
         }
 
-        /* Streamlit text elements */
-        h1, h2, h3, p, span, label {
-            color: #e6e6e6 !important;
+        .subtle {
+            color: #a0a0a0;
+            opacity: 1;
         }
 
-        /* Captions / helper text */
         .stCaption {
-            color: #a0a0a0 !important;
+            color: #9aa0aa;
         }
 
-        /* Streamlit submit button */
+        label,
+        strong {
+            color: #d0d0d0;
+        }
+
         button {
             background-color: #1c1f26 !important;
             color: #e6e6e6 !important;
