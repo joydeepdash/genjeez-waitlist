@@ -86,6 +86,11 @@ elif THEME == "quirk":
     <style>
     .stApp {
         background-color: #ffffff;
+        color: #111111;
+    }
+
+    :root {
+        color-scheme: light;
     }
 
     input {
